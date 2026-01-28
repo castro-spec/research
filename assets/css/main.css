@@ -39,9 +39,60 @@
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
+/* Header/Navbar styling with multi-corner colors */
+.header, .navbar {
+  background: 
+    /* Red corner */
+    linear-gradient(135deg, rgba(255, 69, 0, 0.9) 0%, transparent 30%),
+    /* Green corner */
+    linear-gradient(225deg, rgba(0, 255, 127, 0.9) 0%, transparent 30%),
+    /* Orange corner */
+    linear-gradient(45deg, rgba(255, 165, 0, 0.9) 0%, transparent 30%),
+    /* Blue corner */
+    linear-gradient(315deg, rgba(65, 105, 225, 0.9) 0%, transparent 30%),
+    /* Purple center */
+    radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.7) 0%, transparent 60%),
+    /* Dark base */
+    linear-gradient(rgba(20, 20, 30, 0.9), rgba(20, 20, 30, 0.9));
+  
+  animation: headerGlow 8s ease-in-out infinite alternate;
+  background-size: 200% 200%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes headerGlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+
+
+
+
+
 .light-background {
-  --background-color: #fffaf2;
-  --surface-color: #ffffff;
+  /* Vibrant sky gradient */
+  --background-color: linear-gradient(135deg, 
+    #FF6B6B 0%,     /* Red */
+    #FF8E53 25%,    /* Orange-Red */
+    #FFD166 50%,    /* Yellow-Orange */
+    #06D6A0 75%,    /* Green */
+    #118AB2 100%    /* Blue */
+  );
+  --surface-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+}
+
+/* Apply to body or hero section */
+body, .hero-section {
+  background: var(--background-color);
+  background-attachment: fixed; /* Makes gradient fixed for parallax effect */
+  min-height: 100vh;
+  color: #000000; /* Black text for contrast */
 }
 
 .dark-background {
@@ -65,15 +116,62 @@ body {
   background-color: var(--background-color);
   font-family: var(--default-font);
 }
-
-.africa_name{
-padding-left:45px ;
-font-size: 30px;
-font-weight: bold;
-
+//* Logo container styling */
+.logo {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
 }
-.logo_name{
-  font-size: 30px;
+
+/* Logo image styling */
+.logo img {
+  width: 100px; /* Adjust based on your preference */
+  height: px;
+  object-fit: contain; /* or 'cover' if you want it to fill */
+  border-radius: 50%; /* Makes it circular - remove if not wanted */
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  border: 3px solid #fff;
+  background: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+
+
+
+
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.africa_name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #FF4500; /* Bright orange-red */
+  text-transform: capitalize;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  margin-bottom: 2px;
+}
+
+.logo_name {
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700 0%, #ADFF2F 100%); /* Golden yellow to Green Yellow */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
 
@@ -153,6 +251,8 @@ h6 {
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
+
+
 .header {
   --background-color: rgba(255, 255, 255, 0);
   --default-color: #ffffff;
@@ -4454,3 +4554,125 @@ section,
     border-radius: 0;
   }
 }
+/* Ensure form elements are clickable */
+#ticketModal .modal-body.ticket-body-bg {
+  position: relative;
+}
+
+#ticketModal .modal-body.ticket-body-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+    url('assets/img/form.jpg') center / cover no-repeat;
+  z-index: 1;
+}
+
+#ticketModal .modal-header,
+#ticketModal .modal-body > form {
+  position: relative;
+  z-index: 2;
+}
+
+#ticketModal .form-control {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+#ticketModal .modal-title,
+#ticketModal .form-label {
+  color: white !important;
+  position: relative;
+  z-index: 2;
+}
+.partners {
+  background-color: #f9fafb;
+  padding: 80px 20px;
+}
+
+.partners-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.partners-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.partners-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 50px;
+}
+
+.partners-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.partner-logo {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.partner-logo img {
+  max-width: 100%;
+  max-height: 80px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.partner-logo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.partner-logo:hover img {
+  filter: grayscale(0%);
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-subtitle {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #f97316; /* orange accent */
+  font-weight: 600;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.section-subtitle::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background-color: #f97316;
+  margin: 8px auto 0;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #111827;
+  margin-top: 10px;
+}
+
+
+

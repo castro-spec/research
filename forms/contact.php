@@ -1,42 +1,101 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+// Allow only POST requests
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+    echo "Method Not Allowed";
+    exit;
+}
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+// SQLite database path
+$dbPath = __DIR__ . "/../database/Africa.db";
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+try {
+    // Connect to SQLite database
+    $pdo = new PDO("sqlite:" . $dbPath);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo "Database connection failed.";
+    exit;
+}
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+// Sanitize input
+$name    = trim($_POST['name'] ?? '');
+$email   = trim($_POST['email'] ?? '');
+$subject = trim($_POST['subject'] ?? '');
+$message = trim($_POST['message'] ?? '');
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+// Validate required fields
+if (empty($name) || empty($email) || empty($message)) {
+    http_response_code(400);
+    echo "Please fill in all required fields.";
+    exit;
+}
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  isset($_POST['phone']) && $contact->add_message($_POST['phone'], 'Phone');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+// Validate email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo "Invalid email address.";
+    exit;
+}
 
-  echo $contact->send();
-?>
+// Insert data into SQLite
+$sql = "INSERT INTO contacts (name, email, subject, message)
+        VALUES (:name, :email, :subject, :message)";
+
+$stmt = $pdo->prepare($sql);
+
+try {
+    $stmt->execute([
+        ':name'    => $name,
+        ':email'   => $email,
+        ':subject' => $subject,
+        ':message' => $message
+    ]);
+
+    http_response_code(200);
+    echo "Thank you! Your message has been received.";
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo "Failed to save your message.";
+}
+
+// ======================
+// SEND EMAIL
+// ======================
+$to = "rotichbravin13@gmail.com"; // receiving email
+
+$emailSubject = "New Contact Message – Africa Balloon Fiesta";
+
+$emailBody = "
+You have received a new contact message from the website.
+
+Name: $name
+Email: $email
+Subject: $subject
+
+Message:
+$message
+";
+
+// Use a valid sender address (important for delivery)
+$headers = [
+    "From: Africa Balloon Fiesta <no-reply@localhost>",
+    "Reply-To: $email",
+    "Content-Type: text/plain; charset=UTF-8"
+];
+
+// Send email
+$mailSent = mail($to, $emailSubject, $emailBody, implode("\r\n", $headers));
+
+// ======================
+// RESPONSE
+// ======================
+if ($mailSent) {
+    http_response_code(200);
+    echo "Thank you! Your message has been sent successfully.";
+} else {
+    http_response_code(500);
+    echo "Message saved, but email could not be sent.";
+}
+
