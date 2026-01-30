@@ -27,14 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'ochiengfidel147@gmail.com';
-            $mail->Password = 'tngqhomkvmyeecwg ';
+            $mail->Username = 'rotichbravin13@gmail.com';
+            $mail->Password = 'wlrw qemj hgmk yjfe ';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('ochiengfidel147@gmail.com', 'Africa Balloons Fiesta Website');
+            $mail->setFrom('rotichbravin13@gmail.com', 'Africa Balloons Fiesta Website');
             $mail->addReplyTo($email, $name);
-            $mail->addAddress('ochiengfidel147@gmail.com');
+            $mail->addAddress('rotichbravin13@gmail.com');
 
             $mail->isHTML(true);
             $mail->Subject = "New Contact Form: $subject";
