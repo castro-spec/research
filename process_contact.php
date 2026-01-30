@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $mail->send();
 
-            echo "Message saved and email sent successfully.";
+        
 
         } catch (Exception $e) {
             echo "Saved in DB but email failed: {$mail->ErrorInfo}";
