@@ -297,5 +297,43 @@ document.getElementById("ticketModal").addEventListener("hidden.bs.modal", () =>
 });
 
 
+/* ticket logger for the confimatiin of payments*/
+
+document.getElementById('ticketForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const ticketType = document.getElementById('ticketType').value;
+    const ticketAmount = document.getElementById('ticketAmount').textContent || 1000; // Default amount
+
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('ticketType', ticketType);
+    formData.append('amount', ticketAmount);
+
+    const res = await fetch('process_ticket.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        // Hide form, show payment info
+        document.getElementById('formSection').classList.add('d-none');
+        const paySection = document.getElementById('paybillSection');
+        paySection.classList.remove('d-none');
+        document.getElementById('accountNumber').textContent = data.accountNumber;
+        document.getElementById('ticketAmount').textContent = data.amount;
+    } else {
+        alert(data.message);
+    }
+});
+
+
 
 
