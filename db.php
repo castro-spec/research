@@ -2,7 +2,7 @@
 $host = "127.0.0.1";
 $user = "root";
 $password = ""; 
-$database = "Africa_fiesta";
+$database = "Africa";
 $port = 3306;
 
 $conn = new mysqli($host, $user, $password, $database, $port);

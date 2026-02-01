@@ -57,7 +57,7 @@ $accountNumber = $phone;
 
 // === Insert into database ===
 $stmt = $conn->prepare("
-    INSERT INTO tickets
+    INSERT INTO payments
     (full_name, email, phone, ticket_type, amount, payment_status, account_number)
     VALUES (?, ?, ?, ?, ?, 'pending', ?)
 ");

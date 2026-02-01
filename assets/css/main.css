@@ -116,7 +116,7 @@ body {
   background-color: var(--background-color);
   font-family: var(--default-font);
 }
-//* Logo container styling */
+/* Logo container styling */
 .logo {
   text-decoration: none;
   color: inherit;
@@ -309,9 +309,19 @@ h6 {
   display: flex;
   justify-content: center;
 }
-
-. 
+.nav-wrap {
+  position: sticky;
+  overflow: vis;
+  top: 0;
+  z-index: 999;
+  background: linear-gradient(90deg, #5b2c83, #1fa97c);
 }
+.nav-wrap .container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
 
 /* Global Header on Scroll
 ------------------------------*/
@@ -324,17 +334,20 @@ h6 {
 --------------------------------------------------------------*/
 /* Navmenu - Desktop */
 @media (min-width: 1200px) {
+  
   .navmenu {
-    padding: 0;
-  }
-
-  .navmenu ul {
-    margin: 0;
-    padding: 0;
     display: flex;
-    list-style: none;
-    align-items: center;
+    justify-content: center;
   }
+  
+  .navmenu ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
 
   .navmenu li {
     position: relative;
@@ -429,132 +442,77 @@ h6 {
   }
 }
 
-/* Navmenu - Mobile */
+/* =========================
+   SIMPLE MOBILE NAV
+========================= */
+/* =========================
+   CENTERED CARD MOBILE NAV
+========================= */
 @media (max-width: 1199px) {
-  .mobile-nav-toggle {
-    color: var(--nav-color);
-    font-size: 28px;
-    line-height: 0;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
 
   .navmenu {
-    padding: 0;
-    z-index: 9997;
+    position: relative;
   }
 
-  .navmenu ul {
-    display: none;
-    list-style: none;
-    position: absolute;
-    inset: 60px 20px 20px 20px;
-    padding: 10px 0;
-    margin: 0;
-    border-radius: 6px;
-    background-color: var(--nav-mobile-background-color);
-    overflow-y: auto;
-    transition: 0.3s;
-    z-index: 9998;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  .navmenu a,
-  .navmenu a:focus {
-    color: var(--nav-dropdown-color);
-    padding: 10px 20px;
-    font-family: var(--nav-font);
-    font-size: 17px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    transition: 0.3s;
-  }
-
-  .navmenu a i,
-  .navmenu a:focus i {
-    font-size: 12px;
-    line-height: 0;
-    margin-left: 5px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: 0.3s;
-    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
-  }
-
-  .navmenu a i:hover,
-  .navmenu a:focus i:hover {
-    background-color: var(--accent-color);
-    color: var(--contrast-color);
-  }
-
-  .navmenu a:hover,
-  .navmenu .active,
-  .navmenu .active:focus {
-    color: var(--nav-dropdown-hover-color);
-  }
-
-  .navmenu .active i,
-  .navmenu .active:focus i {
-    background-color: var(--accent-color);
-    color: var(--contrast-color);
-    transform: rotate(180deg);
-  }
-
-  .navmenu .dropdown ul {
-    position: static;
-    display: none;
-    z-index: 99;
-    padding: 10px 0;
-    margin: 10px 20px;
-    background-color: var(--nav-dropdown-background-color);
-    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-    box-shadow: none;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .navmenu .dropdown ul ul {
-    background-color: rgba(33, 37, 41, 0.1);
-  }
-
-  .navmenu .dropdown>.dropdown-active {
+  .mobile-nav-toggle {
+    font-size: 26px;
+    cursor: pointer;
     display: block;
-    background-color: rgba(33, 37, 41, 0.03);
+    color: var(--nav-color);
   }
 
-  .mobile-nav-active {
-    overflow: hidden;
-  }
-
-  .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
+  /* Card container */
+  .navmenu > ul {
+    display: none;
     position: absolute;
-    font-size: 32px;
-    top: 15px;
-    right: 15px;
-    margin-right: 0;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90vw, 320px);
+    background: #fff;
+    padding: 14px 0;
+    margin-top: 12px;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
     z-index: 9999;
   }
 
-  .mobile-nav-active .navmenu {
-    position: fixed;
-    overflow: hidden;
-    inset: 0;
-    background: rgba(33, 37, 41, 0.8);
-    transition: 0.3s;
-  }
-
-  .mobile-nav-active .navmenu>ul {
+  /* Show card */
+  .mobile-nav-active .navmenu > ul {
     display: block;
   }
+
+  .navmenu li {
+    width: 100%;
+  }
+
+  .navmenu a {
+    padding: 14px 20px;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navmenu a:hover {
+    background: #f6f6f6;
+  }
+
+  .navmenu a.active {
+    color: var(--accent-color);
+  }
+
+  /* CTA button */
+  .navmenu .btn-primary {
+    margin: 12px 16px;
+    width: calc(100% - 32px);
+    text-align: center;
+  }
 }
+
+
+
 
 /*--------------------------------------------------------------
 # Global Footer
@@ -4671,5 +4629,222 @@ section,
   margin-top: 10px;
 }
 
+/* Gallery Section Styling - SIMPLIFIED & GUARANTEED TO WORK */
+#gallery {
+  background: #f8f9fa;
+  padding: 40px 0;
+}
 
+/* Card Container */
+.gallery-card {
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
 
+.gallery-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+/* Image Container - CRITICAL FIX */
+.img-container {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image Styling - CRITICAL FIX */
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Card Body Styling */
+.card-body {
+  background: white;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #0d6efd;
+}
+
+.card-text {
+  color: #495057;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .img-container {
+    height: 200px;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* Align buttons to the bottom of each card */
+#packages .card-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px; /* Adjust height as needed */
+  padding: 25px;
+}
+
+#packages .card-body h3 {
+  margin-bottom: 10px;
+}
+
+#packages .card-body h4 {
+  margin-bottom: 15px;
+}
+
+#packages .card-body ul {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+#packages .card-body ul li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+#packages .card-body ul li::before {
+  content: "✓";
+  color: #0d6efd;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Push button to the bottom */
+#packages .card-body > button {
+  margin-top: auto;
+  padding: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Card hover effects */
+#packages .card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+#packages .card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+  border-color: #0d6efd;
+}
+
+/* Hover effect for Luxury card (dark button) */
+#packages .card:nth-child(1):hover {
+  border-color: #343a40;
+}
+
+#packages .card:nth-child(1) .btn-dark:hover {
+  background-color: #212529;
+  transform: translateY(-2px);
+}
+
+/* Hover effect for Mid Range card (primary button) */
+#packages .card:nth-child(2):hover {
+  border-color: #0d6efd;
+}
+
+#packages .card:nth-child(2) .btn-primary:hover {
+  background-color: #0a58ca;
+  transform: translateY(-2px);
+}
+
+/* Hover effect for Budget card (outline button) */
+#packages .card:nth-child(3):hover {
+  border-color: #0d6efd;
+}
+
+#packages .card:nth-child(3) .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Button hover effects */
+#packages .btn {
+  position: relative;
+  overflow: hidden;
+}
+
+#packages .btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#packages .btn:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Optional: Add subtle gradient background on hover */
+#packages .card:hover .card-body {
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 100%);
+}
+/* Ensure row doesn't wrap and centers content */
+#packages .row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  gap: 20px; /* Space between cards */
+  padding: 0 15px; /* Compensate for removed column padding */
+}
+
+/* Force all three columns to stay side-by-side */
+#packages .col-md-4 {
+  flex: 0 0 calc(33.333% - 13.33px) !important; /* Account for gap */
+  max-width: calc(33.333% - 13.33px) !important;
+  padding: 0 !important; /* Remove Bootstrap's gutter padding */
+}
+
+/* Ensure cards stretch to full column height/width */
+#packages .card {
+  width: 100%;
+  height: 100%;
+  min-height: 320px; /* Optional: ensure consistent height */
+}
+
+/* Optional: Horizontal scroll on very small screens instead of wrapping */
+@media (max-width: 768px) {
+  #packages .container {
+    overflow-x: auto;
+    padding: 0;
+  }
+  
+  #packages .row {
+    min-width: 1000px; /* Prevent shrinkage */
+  }
+}
